@@ -3,7 +3,7 @@
 #include "Card.cpp"
 #include "Vector.cpp"
 
-using usi = unsigned short int;
+using usi = unsigned short int; 
 
 class Deck 
 {
