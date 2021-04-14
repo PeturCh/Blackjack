@@ -4,7 +4,7 @@
 
 using usi = unsigned short int;
 
-class Player
+class Player //Maria uploaded this
 {
     private:
     String name;
@@ -15,7 +15,7 @@ class Player
    
     const bool ValidateName(const String &_name) const 
     {
-        for (usi i = 0; i < _name.getLength(); i++)   // Peshko Maria        6 
+        for (usi i = 0; i < _name.getLength(); i++)   
         {
             if (name[i] >= 'A' || name[i] <= 'Z' || name[i] >= 'a' || name[i] <= 'z' || name[i] == ' ')
             {
