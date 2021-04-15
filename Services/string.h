@@ -15,7 +15,6 @@ class String
     void destroy();
     void resize();
     void resize(usi size);
-    //char& at(unsigned short int) const;
 
     public:
 
@@ -26,15 +25,12 @@ class String
     void copy(const char*);
     String& operator=(const char *);
     String& operator=(const String&);
+    const bool operator==(const String&);
     ~String();
 
     const bool isEmpty() const;
     usi getLength() const;
     usi getCapacity() const;
-    //char* begin() const;
-    //char* end() const;
-    //char* rbegin() const;
-    //char* rend() const;
     char operator[](usi) const;
     char& operator[](usi);
 

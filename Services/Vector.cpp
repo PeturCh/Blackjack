@@ -75,7 +75,7 @@ public:
         {
             std::cout<<data[i];
         }
-        
+
     }
 
     usi getSize() const
@@ -88,7 +88,7 @@ public:
         return capacity;
     }
 
-    T& at(usi i)
+    T operator[](usi i) const
     {
         if (i < size)
         {
@@ -97,14 +97,13 @@ public:
         throw;
     }
 
-    T operator[](usi i) const
-    {
-        return at(i);
-    }
-
     T& operator[](usi i)
     {
-        return at(i);
+        if (i < size)
+        {
+            return data[i];
+        }
+        throw;
     }
 
     bool isEmpty() const

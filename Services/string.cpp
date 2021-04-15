@@ -60,16 +60,6 @@ void String::resize(usi size)
     data = newString;
 }
 
-
-/*
-char& String::at(unsigned short int i) const
-{
-    if(i < length)
-    {
-        return data[i];
-    }
-}
-*/
 String::String()
 {
     capacity = 8;
@@ -109,6 +99,21 @@ String& String::operator=(const char *other)
     return *this;
 }
 
+const bool String::operator==(const String& other)
+{
+    if(other.getLength() != this->getLength())
+        return false;
+
+    for (size_t i = 0; i < getLength(); i++)
+    {
+        if (data[i] != other[i])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 String::~String()
 {
     destroy();   
@@ -119,7 +124,6 @@ const bool String::isEmpty() const
     return length == 0;
 }
 
-
 usi String::getLength() const
 {
     return length;
@@ -129,29 +133,6 @@ usi String::getCapacity() const
 {
     return capacity;
 }
-
-/*
-char* String::begin() const
-{
-    return &data[0];
-}
-
-char* String::end() const
-{
-    return &data[length]; //returns the adress of the '\0'
-}
-
-char* String::rbegin() const
-{
-    return &data[length];
-}
-
-char* String::rend() const
-{
-    return &data[0]; 
-}
-*/
-
 
 char String::operator[](usi i) const
 {
