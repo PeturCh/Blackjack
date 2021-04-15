@@ -242,6 +242,11 @@ void String::swap(String other)
     *this = temp;
 }
 
+const bool String::operator==(const String& other)
+{
+    return (this->data == other.data);
+}
+
 std::ostream& operator<<(std::ostream& out, const String& current)
 {
     out << current.data << '\n';

@@ -9,6 +9,7 @@ class Deck
 {
     Vector<Card> cards;
     String id;
+    usi drawed = 0;
 
     void addCards()
     {
@@ -52,8 +53,34 @@ class Deck
            cards[i] = cards[i - 1];
         }
         cards[0] = temp;
-        cards.print();
+        drawed++;
         return temp;
+    }
+
+    usi suit_count(Type type)
+    {
+        usi counter = 0;
+        for (usi i = drawed; i < cards.getSize() - 1; i++)
+        {
+            if(cards[i].getType() == type)
+            {
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    usi rank_count(String value)
+    {
+        usi counter = 0;
+        for(usi i = drawed; i < cards.getSize() - 1; i++)
+        {
+            if(cards[i].getValue() == value)
+            {
+                counter++;
+            }
+        }
+        return counter;
     }
 };
 

@@ -41,6 +41,16 @@ class Card
         return *this;
     }
 
+    Type getType()
+    {
+        return type;
+    }
+
+    String getValue()
+    {
+        return value;
+    }
+
     friend std::ostream& operator<<(std::ostream& out, const Card& c);
 };
 

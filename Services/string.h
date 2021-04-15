@@ -45,6 +45,8 @@ class String
     void push_back(const String&);
     //void pop_back();
     void swap(String);
+
+    const bool operator==(const String&);
     
     friend std::ostream& operator<<(std::ostream& out, const String&);
 };
