@@ -1,9 +1,9 @@
 #pragma once
 #include <iostream>
 #include "Card.cpp"
-#include "Vector.cpp"
+#include "..\Services\Vector.cpp"
 
-using usi = unsigned short int; 
+using usi = unsigned short int;
 
 class Deck 
 {
@@ -43,9 +43,22 @@ class Deck
         cards = _cards;
         id = _id;
     }
+
+    Card draw()
+    {
+        Card temp = cards[cards.getSize() - 1];                             
+        for (usi i = cards.getSize() - 1; i > 0 ; i--)                      
+        {                                                                   
+           cards[i] = cards[i - 1];
+        }
+        cards[0] = temp;
+        cards.print();
+        return temp;
+    }
 };
 
 int main()
 {
-    
+    Deck d;
+    d.draw();
 }

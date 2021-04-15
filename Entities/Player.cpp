@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <iostream>
-#include "string.cpp" 
+#include "..\Services\string.cpp"
 
 using usi = unsigned short int;
 

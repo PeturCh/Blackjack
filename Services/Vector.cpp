@@ -6,7 +6,7 @@ using usi = unsigned short int;
 template<typename T>
 class Vector
 {
-    private:
+private:
     T* data;
     usi size;
     usi capacity;
@@ -15,12 +15,12 @@ class Vector
     {
         delete[] data;
     }
-    
+
     void resize()
     {
         capacity += 8;
         T* newBuffer = new T[capacity];
-        for(usi i = 0; i < size; i++)
+        for (usi i = 0; i < size; i++)
         {
             newBuffer[i] = data[i];
         }
@@ -28,7 +28,7 @@ class Vector
         data = newBuffer;
     }
 
-    public:
+public:
 
     Vector()
     {
@@ -39,7 +39,7 @@ class Vector
 
     Vector(const Vector<T>& others)
     {
-        copy(others);   
+        copy(others);
     }
 
     void copy(const Vector<T>& others)
@@ -48,7 +48,7 @@ class Vector
         size = others.size;
         data = new T[capacity];
 
-        for(usi i = 0; i < size; i++)
+        for (usi i = 0; i < size; i++)
         {
             data[i] = others.data[i];
         }
@@ -56,7 +56,7 @@ class Vector
 
     Vector<T>& operator=(const Vector<T>& others)
     {
-        if(this != &others)
+        if (this != &others)
         {
             destroy();
             copy(others);
@@ -66,7 +66,16 @@ class Vector
 
     ~Vector()
     {
-        destroy();   
+        destroy();
+    }
+
+    void print()
+    {
+        for (size_t i = 0; i < size; i++)
+        {
+            std::cout<<data[i];
+        }
+        
     }
 
     usi getSize() const
@@ -81,7 +90,7 @@ class Vector
 
     T& at(usi i)
     {
-        if(i < size)
+        if (i < size)
         {
             return data[i];
         }
@@ -105,7 +114,7 @@ class Vector
 
     void push_back(const T& newElem)
     {
-        if(size == capacity)
+        if (size == capacity)
         {
             resize();
         }
@@ -117,22 +126,4 @@ class Vector
         size--;
     }
 
-    //void toFile(const char* fileName)
-    //{
-    //    std::ofstream output(fileName, std::fstream::app);
-    //
-    //    if(output.is_open())
-    //    {
-    //        for(int i = 0; i < size; i++)
-    //        {
-    //            output << data[i] << " ";
-    //        }
-    //        output << "\n";
-    //        output.close();
-    //    }
-    //    else
-    //    {
-    //        std::cout << "File " << fileName << " not opened" << std::endl;
-    //    }
-    //}
 };
