@@ -205,7 +205,7 @@ void String::push_back(const char *newStr)
     
     if(length + size <= capacity)
     {
-        resize(length + size - capacity);
+        resize(length + size - capacity + 1);
     }
 
     for (usi i = length, j = 0; i < length + size, j < size; i++, j++)
@@ -219,7 +219,7 @@ void String::push_back(const String &other)
     
     if(length + other.length <= capacity)
     {
-        resize(length + other.length - capacity);
+        resize(length + other.length - capacity + 1);
     }
 
     for (usi i = length, j = 0; i < length + other.length; i++, j++)
