@@ -94,7 +94,11 @@ public:
         {
             return data[i];
         }
-        throw;
+        else
+        {
+            std::cout<<"Invalid index: "<<i;
+            throw;
+        }
     }
 
     T& operator[](usi i)
@@ -103,7 +107,11 @@ public:
         {
             return data[i];
         }
-        throw;
+        else
+        {
+            std::cout<<"Invalid index: "<<i;
+            throw;
+        }
     }
 
     bool isEmpty() const

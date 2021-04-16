@@ -36,6 +36,10 @@ class Deck
 
     void swap(usi first, usi second)
     {
+        if (first > cards.getSize() || second > cards.getSize())
+        {
+            return;
+        }
         Card temp = cards[first];
         cards[first] = cards[second];
         cards[second] = temp;
@@ -96,7 +100,7 @@ class Deck
 
     Card draw()
     {
-        usi randy = rand() % (cards.getSize() - 1) + drawed;
+        usi randy = drawed + rand() % ((cards.getSize()) - drawed);
         Card temp = cards[randy];                             
         for (usi i = randy; i > 0 ; i--)                      
         {                                                                   
@@ -133,3 +137,14 @@ class Deck
         return counter;
     }
 };
+
+int main()
+{
+    Deck d(5);
+    std::cout<<d.draw();
+    std::cout<<d.draw();
+    std::cout<<d.draw();
+    std::cout<<d.draw();
+    std::cout<<d.draw();
+
+}
