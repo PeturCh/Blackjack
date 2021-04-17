@@ -6,9 +6,9 @@
 
 using usi = unsigned short int;
 
-void deserialize() 
+void deserialize(const char *fileName) 
 {
-    std::ifstream input ("..\\PlayersData\\Data.txt");
+    std::ifstream input(fileName);
     char row[50];
 
     if(!input.eof())
@@ -17,12 +17,6 @@ void deserialize()
     }
     
     usi index = 0;
-
-    usi rowSize = 0;
-    for (size_t i = 0; row[i] != '\0'; i++)
-    {
-        rowSize++;
-    }
     
     String name;
     usi spaces = 0;
@@ -41,11 +35,6 @@ void deserialize()
     }
     std::cout<<name<<' ';
 
-    if(!input.eof())
-    {
-        input.getline(row, 5 , '\n');
-    }
-
     usi playedGamesFF = 0;
     for (; row[index] != '\0'; index++)
     {
@@ -54,13 +43,13 @@ void deserialize()
             ++index;
             break;
         }
-        playedGamesFF *= 10;
+        playedGamesFF *= 10; 
         playedGamesFF += row[index] - '0';
     }
     std::cout<<playedGamesFF<<' ';
 
     float winningCoef = 0;
-    for (; row[index] != '0'; index++)
+    for (; row[index] != '\0'; index++)
     {
         if (row[index] == ' ')
         {
@@ -70,9 +59,9 @@ void deserialize()
         if (row[index] == '.' || row[index] == ',')
 	    {
 		    index++;
-		    winningCoef += float(row[index++] - '0') / 10;
-            if(row[index]!='\0')
-		    winningCoef += float(row[index] - '0') / 100;
+		    winningCoef += float(row[index] - '0') / 10;
+            if(row[index+1]!='\0')
+		        winningCoef += float(row[++index] - '0') / 100;
 		    continue;
 	    }
         winningCoef *= 10;
@@ -83,5 +72,5 @@ void deserialize()
 
 int main()
 {
-    deserialize();
+    deserialize("..\\PlayersData\\Data.txt");
 }

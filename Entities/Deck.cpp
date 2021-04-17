@@ -11,19 +11,10 @@ void Deck::addCards()
     for (usi i = 1; i <= 4; i++)
     {
         Type type = Type(i);
-        cards.push_back(Card(type, String("2")));
-        cards.push_back(Card(type, String("3")));
-        cards.push_back(Card(type, String("4")));
-        cards.push_back(Card(type, String("5")));
-        cards.push_back(Card(type, String("6")));
-        cards.push_back(Card(type, String("7")));
-        cards.push_back(Card(type, String("8")));
-        cards.push_back(Card(type, String("9")));
-        cards.push_back(Card(type, String("10")));
-        cards.push_back(Card(type, String("A")));
-        cards.push_back(Card(type, String("K")));
-        cards.push_back(Card(type, String("Q")));
-        cards.push_back(Card(type, String("J")));
+        for (usi j = 2; j <= 14; j++)
+        {
+            cards.push_back(Card(type, j));
+        }
     }
 
     for (size_t i = 0; i < 52; i++)
@@ -149,11 +140,10 @@ Deck::~Deck()
 }
 
 
-
 //int main()
 //{
-//    Deck d(10);
-//    for (size_t i = 0; i < 10; i++)
+//    Deck d;
+//    for (size_t i = 0; i < 40; i++)
 //    {
 //        std::cout<<d.draw().getId();
 //    }
