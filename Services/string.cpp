@@ -270,6 +270,11 @@ void String::swap(String other)
 
 std::ostream& operator<<(std::ostream& out, const String& current)
 {
-    out << current.data << '\n';
+    for (size_t i = 0; i < current.getLength(); i++)
+    {
+        out << current.data[i];
+    }
+    
+    //out << '\n';
     return out;
 }

@@ -150,11 +150,11 @@ Deck::~Deck()
 
 
 
-int main()
-{
-    Deck d(10);
-    for (size_t i = 0; i < 10; i++)
-    {
-        std::cout<<d.draw().getId();
-    }
-}
+//int main()
+//{
+//    Deck d(10);
+//    for (size_t i = 0; i < 10; i++)
+//    {
+//        std::cout<<d.draw().getId();
+//    }
+//}
