@@ -9,7 +9,7 @@ using usi = unsigned short int;
 class Deck 
 {
     Vector<Card> cards;
-    String id;
+    char *id;
     usi drawed = 0;
 
     void addCards()
@@ -17,19 +17,24 @@ class Deck
         for (usi i = 1; i <= 4; i++)
         {
             Type type = Type(i);
-            cards.push_back(Card(type, String("2"), id));
-            cards.push_back(Card(type, String("3"), id));
-            cards.push_back(Card(type, String("4"), id));
-            cards.push_back(Card(type, String("5"), id));
-            cards.push_back(Card(type, String("6"), id));
-            cards.push_back(Card(type, String("7"), id));
-            cards.push_back(Card(type, String("8"), id));
-            cards.push_back(Card(type, String("9"), id));
-            cards.push_back(Card(type, String("10"), id));
-            cards.push_back(Card(type, String("A"), id));
-            cards.push_back(Card(type, String("K"), id));
-            cards.push_back(Card(type, String("Q"), id));
-            cards.push_back(Card(type, String("J"), id));
+            cards.push_back(Card(type, String("2")));
+            cards.push_back(Card(type, String("3")));
+            cards.push_back(Card(type, String("4")));
+            cards.push_back(Card(type, String("5")));
+            cards.push_back(Card(type, String("6")));
+            cards.push_back(Card(type, String("7")));
+            cards.push_back(Card(type, String("8")));
+            cards.push_back(Card(type, String("9")));
+            cards.push_back(Card(type, String("10")));
+            cards.push_back(Card(type, String("A")));
+            cards.push_back(Card(type, String("K")));
+            cards.push_back(Card(type, String("Q")));
+            cards.push_back(Card(type, String("J")));
+        }
+
+        for (size_t i = 0; i < 52; i++)
+        {
+            cards[i].setIdOfCard(true);
         }
         shuffle();
     }
@@ -71,28 +76,36 @@ class Deck
     public:
     Deck()
     {
+        id = new char[8];
         id = "Default";
         addCards();
     }
-
-    Deck(usi count, String _id = "Custom")
+    
+    Deck(usi count)
     {
-        id = _id;
-        for (size_t i = 0; i < count; i++)
+        id = new char[11];
+        for (usi i = 0; i < count; i++)
         {
             usi value = 2 + rand() % (( 14 + 1 ) - 2);
             usi type = 1 + rand() % (( 4 + 1 ) - 1);
+            strcpy(id, "Custom");
             Card c(type, value);
             if (count <= 52 && contains(c))
             {
+                i--;
                 continue;
             }
             else cards.push_back(c);
         }
+        for (size_t i = 0; i < count; i++)
+        {
+            cards[i].setIdOfCard(false);
+        }
+        
         cards.print();
     }
 
-    Deck(const Vector<Card> &_cards, const String &_id)
+    Deck(const Vector<Card> &_cards, char* _id)
     {
         cards = _cards;
         id = _id;
@@ -136,15 +149,19 @@ class Deck
         }
         return counter;
     }
+
+    ~Deck()
+    {
+        delete [] id;
+    }
 };
+
 
 int main()
 {
-    Deck d(5);
-    std::cout<<d.draw();
-    std::cout<<d.draw();
-    std::cout<<d.draw();
-    std::cout<<d.draw();
-    std::cout<<d.draw();
-
+    Deck d(10);
+    for (size_t i = 0; i < 10; i++)
+    {
+        std::cout<<d.draw().getId();
+    }
 }

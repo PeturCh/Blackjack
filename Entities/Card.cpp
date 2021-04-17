@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <cstring>
 #include "..\Services\string.cpp"
 
 enum Type 
@@ -12,15 +13,48 @@ class Card
     private:
     Type type;
     String value; 
-    String id;
+    char* id;
 
     public:
+    void setIdOfCard(bool def)
+    {
+        id = new char[10];
+        for(int i=0 ; i < 10 ; i++)
+        {
+            id[i] = ' ';
+        }
+
+        if(def)
+        {
+            strcpy(id , "Default");
+            int i = 7;
+            id[i++] = '0' + type;
+            if (value == "10")
+            {
+                id[i++] = '1';
+                id[i] = '0';
+            }
+            else id[i] = value[0];
+        }
+        else
+        {
+            strcpy(id, "Custom");
+            int i = 6;
+            id[i++] = '0' + type;
+            if (value == "10")
+            {
+                id[i++] = '1';
+                id[i] = '0';
+            }
+            else id[i] = value[0];
+        }
+    }
 
     Card()
     {
         type = spades;
         value = "A";
-        id="0";
+        id = new char[10];
     }
 
     Card(const usi _type, const usi _value)
@@ -51,16 +85,14 @@ class Card
         }
         else 
         {
-            char v[2] = {('0' + _value)}; 
-            value = v; 
+            value.push_back('0' + _value);
         }
-    }   
+    }
 
-    Card(const Type _type, const String _value, const String _id)
+    Card(const Type _type, const String _value)
     {
         type = _type;
         value = _value;
-        id = _id;
     }
 
     usi getType() const 
@@ -71,6 +103,11 @@ class Card
     String getValue() const 
     {
         return value;
+    }
+
+    char* getId() const 
+    {
+        return id;
     }
 
     Card& operator=(const Card& other)
@@ -85,6 +122,11 @@ class Card
     }
 
     friend std::ostream& operator<<(std::ostream& out, const Card& c);
+
+    /*~Card()
+    {
+        delete [] id;
+    }*/
 };
 
 std::ostream& operator<<(std::ostream& out, const Card& c)

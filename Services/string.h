@@ -22,6 +22,7 @@ class String
     String(const String&);
     String(const char*);
     String(const char);
+    //String(usi other);
     void copy(const char*);
     String& operator=(const char *);
     String& operator=(const String&);
@@ -39,6 +40,7 @@ class String
     void push_back(const char&);
     void push_back(const char *);
     void push_back(const String&);
+    //String push_back(const String);
     //void pop_back();
     void swap(String);
     

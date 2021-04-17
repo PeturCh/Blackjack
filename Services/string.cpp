@@ -21,9 +21,9 @@ void String::copy(const char* other)
     {
         _length++;
     }
-    length = _length + 1;
+    length = _length;
     capacity = _length + 1;
-    data = new char[_length + 1];
+    data = new char[capacity];
 
     for(size_t i = 0; i < length; i++)
     {
@@ -33,7 +33,7 @@ void String::copy(const char* other)
 
 void String::destroy()
 {
-    delete[] data;
+    delete []data;
 }
 
 void String::resize()
@@ -81,6 +81,33 @@ String::String(const char other)
 {
     copy(other);
 }
+
+//String::String(usi other)
+//{
+//    capacity = 8;
+//    length = 0;
+//    data = new char[capacity];
+//
+//    if(other > 9)
+//    {
+//        usi result = 0, remains;
+//        while(other != 0) 
+//        {
+//            remains = other % 10; 
+//            result = result*10 + remains; 
+//            other /= 10; 
+//        }
+//        other = result;
+//
+//        while(other!=0)
+//        {
+//            this->push_back('0' + other % 10);
+//            other /= 10;
+//        }
+//    }
+//    else this->push_back('0' + other);
+//
+//}
 
 String& String::operator=(const String& other)
 {
@@ -208,6 +235,24 @@ void String::push_back(const String &other)
         data[i] = other[j];
     }
 }
+
+//String String::push_back(const String other)
+//{
+//    if(length + other.length <= capacity)
+//    {
+//        resize(length + other.length - capacity + 1);
+//    }
+//
+//    for (usi i = length, j = 0; i < length + other.length; i++, j++)
+//    {
+//        data[i] = other[j];
+//    }
+//
+//    return other;
+//}
+
+
+
 
 
 /*
