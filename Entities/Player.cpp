@@ -77,7 +77,7 @@ usi Player::getWonGames() const
     return wins;
 }
 
-usi Player::getWinningCoef() const
+float Player::getWinningCoef() const
 {
     return winningCoef;
 }
@@ -86,6 +86,21 @@ usi Player::getPoints() const
 {
     return currentPoints;
 }
+
+ void Player::addWin()
+ {
+    usi playedGames = wins / winningCoef;
+    wins++;
+    playedGames++;
+    winningCoef = (float)wins / playedGames;
+ }
+
+  void Player::addGame()
+ {
+    usi playedGames = wins / winningCoef;
+    playedGames++;
+    winningCoef = (float)wins / playedGames;
+ }
 
 void Player::addPoints(usi _points)
 {

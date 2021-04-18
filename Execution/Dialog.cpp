@@ -7,6 +7,47 @@
 
 using usi = unsigned short int;
 
+void updateFile(Player &p)
+{
+    std::ifstream input("..\\PlayersData\\Data.txt");
+    char row[50];
+    while(!input.eof())
+    {
+        input.getline(row , 70 , '\n');
+    
+        usi index = 0;
+
+        String name;
+        usi spaces = 0;
+        for (; row[index] != '\0'; index++)
+        {
+
+            if(row[index] == ' ') spaces++;
+
+            if(row[index] == ' ' && spaces == 2) 
+            {
+                index++;
+                spaces = 0;
+                break;
+            }
+            name.push_back(row[index]);
+        }
+        if (!(p.getName() == name))
+        {
+            std::ofstream output("..\\PlayersData\\NewData.txt" , std::fstream::app);
+            output <<row << '\n';
+            output.close();
+        }
+    }
+    std::ofstream output("..\\PlayersData\\NewData.txt" , std::fstream::app);
+    output << p.getName() << " " << p.getWonGames() << " " << std::fixed << std::setprecision(2) << p.getWinningCoef();
+    output.close();
+
+    input.close();
+    remove("..\\PlayersData\\Data.txt");
+    rename("..\\PlayersData\\NewData.txt", "..\\PlayersData\\Data.txt");
+}
+
 void probabilityCheck(Player &player, Deck &deck)
 {
     float found = 0;
@@ -73,10 +114,13 @@ bool drawCard(Player &player, Deck &deck)
     {
         if(player.getName() == "Casino Dealer")
         {
+            player.addWin();
             std::cout<<"Congratulations! \nYou win!\nThe casino dealer drew "<< player.getPoints() << '\n';
             return false;
         }
+        player.addGame();
         std::cout<< "You drew "<< player.getPoints() <<" therefore you lose!";
+        updateFile(player);
         return false;
     }
     else return true;
@@ -90,18 +134,24 @@ void stand(Player &player, Deck &deck)
     while (dealer.getPoints() <= 17)
     {
         if(!drawCard(dealer,deck))
-            return;
+            {
+                updateFile(player);
+                return;
+            }
     }
 
     if(dealer.getPoints() > player.getPoints())
     {
+        player.addGame();
         std::cout<<"Poor you! You Lose!\n";
+        updateFile(player);
     }
     else 
-    {
+    {   
+        player.addWin();
         std::cout<<"Congratulations! \nYou win!\n The casino dealer drew just "<< dealer.getPoints()<< " points";
+        updateFile(player);
     }
-    
 }
 
 char makeChoice(Player &player, Deck &deck)
@@ -129,8 +179,6 @@ char makeChoice(Player &player, Deck &deck)
         break;
     }
 }
-
-
 
 usi setSizeOfDeck()
 {
@@ -160,7 +208,7 @@ void play(Deck &deck, Player &player)
     do
     {
         if(!drawCard(player, deck))
-            break;
+            {return;}
         else
             choice = makeChoice(player, deck);
 
@@ -170,21 +218,21 @@ void play(Deck &deck, Player &player)
     {
         stand(player, deck);
     }
-
     else 
     {
         probabilityCheck(player, deck);
-        choice = makeChoice(player, deck);
         do
         {
-            if(!drawCard(player, deck))
-                break;
-            else
             choice = makeChoice(player, deck);
             if(choice == 'P')
             {
                 std::cout<<"Sorry, no more probability checks!\n";
                 choice = makeChoice(player, deck);
+            }
+            if(choice == 'H')
+            {
+                if(!drawCard(player, deck))
+                    return;
             }
 
         }while(choice == 'H');
