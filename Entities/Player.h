@@ -18,7 +18,11 @@ class Player
 
     public:
     Player();
-    Player(const String, const usi, usi, float, usi);
+    Player(const String, const usi, usi, float);
+    String getName() const;
+    usi getWonGames() const;
+    usi getWinningCoef() const;
+    void addPoints(usi);
     Player& operator=(const Player&);
 
     friend std::ostream& operator<<(std::ostream& out, const Player& c);

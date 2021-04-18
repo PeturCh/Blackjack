@@ -6,21 +6,23 @@
 
 const bool Player::ValidateName(const String &_name) const 
 {
+    
+    if (_name[0] < 'A' || _name[0] > 'Z')
+    {
+        std::cout << "You have enterned invalid name. The first name must start with upper case letter!";
+        return false;
+    }
+
     for (usi i = 0; i < _name.getLength(); i++)   
     {
-        if (name[i] >= 'A' || name[i] <= 'Z' || name[i] >= 'a' || name[i] <= 'z' || name[i] == ' ')
+        if (_name[i] >= 'A' || _name[i] <= 'Z' || _name[i] >= 'a' || _name[i] <= 'z' || _name[i] == ' ')
         {
-            if (name[0] < 'A' || name[0] > 'Z')
-            {
-                std::cout << "You have enterned invalid name. The first name must start with upper case letter!";
-                return false;
-            }
-            if (name[i] == ' ' && name[i + 1] == ' ')
+            if (_name[i] == ' ' && _name[i + 1] == ' ')
             {
                 std::cout << "You have enterned invalid name. The name must have only one space!";
                 return false;
             }
-            if (name[i] == ' ' && (name[i + 1] < 'A' || name[i + 1] > 'Z'))
+            if (_name[i] == ' ' && (_name[i + 1] < 'A' || _name[i + 1] > 'Z'))
             {
                 std::cout << "You have enterned invalid name. The second name must start with upper case letter!";
                 return false;
@@ -31,8 +33,8 @@ const bool Player::ValidateName(const String &_name) const
             std::cout << "You have enterned invalid name. The name must contains only latin letters!";  //правилно ли е??
             return false;
         }
-        return true;
     }
+    return true;
 }
 
 bool Player::ValidateYears(usi _years)
@@ -52,7 +54,7 @@ Player::Player()
     currentPoints = 0;
 }
 
-Player::Player(const String _name, const usi _years, usi _wins, float _winningCoef, usi _currentPoints)
+Player::Player(const String _name, const usi _years, usi _wins, float _winningCoef)
 {
     if (ValidateName(_name))
         name = _name;
@@ -62,7 +64,27 @@ Player::Player(const String _name, const usi _years, usi _wins, float _winningCo
 
     wins = _wins;
     winningCoef = _winningCoef;
-    currentPoints = _currentPoints;
+    currentPoints = 0;
+}
+
+String Player::getName() const
+{
+    return name;
+}
+
+usi Player::getWonGames() const
+{
+    return wins;
+}
+
+usi Player::getWinningCoef() const
+{
+    return winningCoef;
+}
+
+void Player::addPoints(usi _points)
+{
+    currentPoints += _points;
 }
 
 Player& Player::operator=(const Player& other)

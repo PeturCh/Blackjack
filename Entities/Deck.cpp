@@ -79,14 +79,18 @@ Deck::Deck(usi count)
             i--;
             continue;
         }
+
+        else if(count > 52)
+        {
+            cards.push_back(c);
+        }
+
         else cards.push_back(c);
     }
     for (size_t i = 0; i < count; i++)
     {
         cards[i].setIdOfCard(false);
     }
-    
-    cards.print();
 }
 
 Deck::Deck(const Vector<Card> &_cards, char* _id)

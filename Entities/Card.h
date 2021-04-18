@@ -24,6 +24,7 @@ class Card
     Card(const Type, const String);
     usi getType() const;
     String getValue() const;
+    //usi getUsiValue() const;
     char* getId() const;
     Card& operator=(const Card&);
 
