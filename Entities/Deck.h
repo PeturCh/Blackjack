@@ -23,7 +23,9 @@ class Deck
     Deck(usi);
     Deck(const Vector<Card> &, char*);
     Card draw();
-    usi suit_count(Type);
-    usi rank_count(String);
+    usi getDeckSize() const;
+    usi getDrawed() const;
+    usi suit_count(Type) const;
+    usi rank_count(int) const;
     ~Deck();
 };

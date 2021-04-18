@@ -82,8 +82,18 @@ usi Player::getWinningCoef() const
     return winningCoef;
 }
 
+usi Player::getPoints() const
+{
+    return currentPoints;
+}
+
 void Player::addPoints(usi _points)
 {
+    if (_points == 11 && currentPoints + _points > 21)
+    {
+        currentPoints += 1;
+    }
+    else
     currentPoints += _points;
 }
 

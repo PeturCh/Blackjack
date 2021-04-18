@@ -112,7 +112,7 @@ Card Deck::draw()
     return temp;
 }
 
-usi Deck::suit_count(Type type)
+usi Deck::suit_count(Type type) const
 {
     usi counter = 0;
     for (usi i = drawed; i < cards.getSize() - 1; i++)
@@ -125,17 +125,27 @@ usi Deck::suit_count(Type type)
     return counter;
 }
 
-usi Deck::rank_count(String value)
+usi Deck::rank_count(int value) const
 {
     usi counter = 0;
     for(usi i = drawed; i < cards.getSize() - 1; i++)
     {
-        if(cards[i].getValue() == value)
+        if(cards[i].getUsiValue() == value || cards[i].getUsiValue() - 10 == value)
         {
             counter++;
         }
     }
     return counter;
+}
+
+usi Deck::getDeckSize() const
+{
+    return cards.getSize();
+}
+
+usi Deck::getDrawed() const
+{
+    return drawed;
 }
 
 Deck::~Deck()

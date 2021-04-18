@@ -22,6 +22,7 @@ class Player
     String getName() const;
     usi getWonGames() const;
     usi getWinningCoef() const;
+    usi getPoints() const;
     void addPoints(usi);
     Player& operator=(const Player&);
 
