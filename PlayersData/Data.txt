@@ -2,4 +2,4 @@ Peshko Beibe 2 0.50
 Mims Bims 8 0.6
 Mitko MainaPistoleta 14 0.99
 Veselin Todorov 2 0.67
-Andon Denkov 2 0.33
+Andon Denkov 2 0.29

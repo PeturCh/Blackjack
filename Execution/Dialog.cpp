@@ -45,7 +45,10 @@ void updateFile(Player &p)
 
     input.close();
     remove("..\\PlayersData\\Data.txt");
-    rename("..\\PlayersData\\NewData.txt", "..\\PlayersData\\Data.txt");
+    if(rename("..\\PlayersData\\NewData.txt", "..\\PlayersData\\Data.txt") == 0);
+    {
+        std::cout<<"All changes are saved successfully in the file!\n";
+    }
 }
 
 void probabilityCheck(Player &player, Deck &deck)
@@ -119,7 +122,7 @@ bool drawCard(Player &player, Deck &deck)
             return false;
         }
         player.addGame();
-        std::cout<< "\nYou drew "<< player.getPoints() <<" therefore you lose!";
+        std::cout<< "\nYou drew "<< player.getPoints() <<" therefore you lose!\n";
         updateFile(player);
         return false;
     }
@@ -143,14 +146,14 @@ void stand(Player &player, Deck &deck)
     if(dealer.getPoints() > player.getPoints())
     {
         player.addGame();
-        std::cout<<"\nPoor you! You Lose!\nYour points were "<< player.getPoints();
+        std::cout<<"\nPoor you! You Lose!\nYour points were "<< player.getPoints()<< "While the dealer's were " <<dealer.getPoints()<<'\n';
         updateFile(player);
         return;
     }
     else 
     {   
         player.addWin(); //Really cool logic you can look it up
-        std::cout<<"\nCongratulations! \nYou win!\nThe casino dealer drew just "<< dealer.getPoints()<< " points";
+        std::cout<<"\nCongratulations! \nYou win!\nThe casino dealer drew just "<< dealer.getPoints()<< " points\n";
         updateFile(player);
         return;
     }
@@ -351,7 +354,7 @@ int main()
             return 1;
         }
         
-        Player newPlayer(newPlayerName,newPlayerAge,0,0);
+        Player newPlayer(newPlayerName,newPlayerAge,0,1);
         std::cout<<"\nYou will play as "<< newPlayerName << ". Choose the size of the deck: \n";
         usi deckSize = setSizeOfDeck();
         if (deckSize == 52)
