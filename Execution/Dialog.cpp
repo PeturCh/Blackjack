@@ -32,7 +32,7 @@ void updateFile(Player &p)
             }
             name.push_back(row[index]);
         }
-        if (!(p.getName() == name))
+        if (!(p.getName() == name)) //writing all players except the most recent played one
         {
             std::ofstream output("..\\PlayersData\\NewData.txt" , std::fstream::app);
             output <<row << '\n';
@@ -40,7 +40,7 @@ void updateFile(Player &p)
         }
     }
     std::ofstream output("..\\PlayersData\\NewData.txt" , std::fstream::app);
-    output << p.getName() << " " << p.getWonGames() << " " << std::fixed << std::setprecision(2) << p.getWinningCoef();
+    output << p.getName() << " " << p.getWonGames() << " " << std::fixed << std::setprecision(2) << p.getWinningCoef(); //adding the the last player
     output.close();
 
     input.close();
@@ -60,7 +60,7 @@ bool drawCard(Player &player, Deck &deck)
 {
     Card card = deck.draw();
 
-    std::cout<<card.getValue() << ' ';
+    std::cout<<'\n'<<card.getValue() << ' ';
 
     switch (card.getType())
     {
@@ -77,7 +77,7 @@ bool drawCard(Player &player, Deck &deck)
         player.addPoints(10);
         std::cout<<"(Points: "<<player.getPoints()<<")\n";
     }
-    else 
+    else //I am really sorry for hurting your eyes..
     {
         switch (card.getValue()[0])
         {
@@ -115,11 +115,11 @@ bool drawCard(Player &player, Deck &deck)
         if(player.getName() == "Casino Dealer")
         {
             player.addWin();
-            std::cout<<"Congratulations! \nYou win!\nThe casino dealer drew "<< player.getPoints() << '\n';
+            std::cout<<"\nCongratulations! \nYou win!\nThe casino dealer drew "<< player.getPoints() << '\n';
             return false;
         }
         player.addGame();
-        std::cout<< "You drew "<< player.getPoints() <<" therefore you lose!";
+        std::cout<< "\nYou drew "<< player.getPoints() <<" therefore you lose!";
         updateFile(player);
         return false;
     }
@@ -129,7 +129,7 @@ bool drawCard(Player &player, Deck &deck)
 void stand(Player &player, Deck &deck)
 {
     Player dealer("Casino Dealer", 50, 50, 0.3);
-    std::cout<<"The dealer is now drawing: \n";
+    std::cout<<"\nThe dealer is now drawing: \n";
     drawCard(dealer, deck);
     while (dealer.getPoints() <= 17)
     {
@@ -143,20 +143,22 @@ void stand(Player &player, Deck &deck)
     if(dealer.getPoints() > player.getPoints())
     {
         player.addGame();
-        std::cout<<"Poor you! You Lose!\n";
+        std::cout<<"\nPoor you! You Lose!\nYour points were "<< player.getPoints();
         updateFile(player);
+        return;
     }
     else 
     {   
-        player.addWin();
-        std::cout<<"Congratulations! \nYou win!\n The casino dealer drew just "<< dealer.getPoints()<< " points";
+        player.addWin(); //Really cool logic you can look it up
+        std::cout<<"\nCongratulations! \nYou win!\nThe casino dealer drew just "<< dealer.getPoints()<< " points";
         updateFile(player);
+        return;
     }
 }
 
 char makeChoice(Player &player, Deck &deck)
 {
-    std::cout<<"Hit/Stand/Probability. Hint: You can use just the first letter: H/S/P. \n";
+    std::cout<<"\nHit/Stand/Probability. Tip: You should use just the first letter: H/S/P. \n";
     char command2[20];
     std::cin.ignore();
     std::cin.getline(command2, 20);
@@ -167,17 +169,12 @@ char makeChoice(Player &player, Deck &deck)
         std::cin.getline(command2, 20);
     }
 
-    switch (command2[0])
+    if(command2[0] != 'H' && command2[0] != 'P' && command2[0] != 'S')
     {
-        case 'S': return 'S';
-        break;
-        case 'H': return 'H';
-        break;
-        case 'P': return 'P';
-        break;
-        default: "You have enterned invlid command! Default command executed: Stand.";
-        break;
+        std::cout<<"\nYou have enterned invlid command! Default command executed: Stand.\n";
+        stand(player,deck);
     }
+    return command2[0];
 }
 
 usi setSizeOfDeck()
@@ -195,13 +192,6 @@ usi setSizeOfDeck()
     return sizeOfDeck;
 }
 
-void addToFile(Player &pl)
-{
-    std::ofstream output("..\\PlayersData\\Data.txt" , std::fstream::app);
-    output <<'\n'<< pl.getName() << " " << pl.getWonGames() << " " << std::fixed << std::setprecision(2) << pl.getWinningCoef();
-    output.close();
-}
-
 void play(Deck &deck, Player &player)
 {
     char choice;
@@ -217,6 +207,7 @@ void play(Deck &deck, Player &player)
     if(choice == 'S')
     {
         stand(player, deck);
+        return;
     }
     else 
     {
@@ -315,12 +306,6 @@ int main()
 {
     Vector<Player> players;
     deserialize("..\\PlayersData\\Data.txt", players);
-    //Player p("Peshko Be",18,5,0.8);
-    //Player c("Mims Be",18,6,0.8);
-    //Player d("Mitko Be",18,12,0.5);
-    //players.push_back(p);
-    //players.push_back(c);
-    //players.push_back(d);
 
     std::cout<<"\nChoose a player or enter a new player:\n";
 
@@ -360,14 +345,13 @@ int main()
             newPlayerName.push_back(commandFC[i]);
         }
 
-        if (newPlayerAge<18)
+        if (newPlayerAge < 18)
         {
             std::cout<<"Sorry, this name isn't in the list or you have enterned invalid age for new player.\nPlayers must be atleast 18 years old!\n";
-            main();
+            return 1;
         }
         
         Player newPlayer(newPlayerName,newPlayerAge,0,0);
-        addToFile(newPlayer);
         std::cout<<"\nYou will play as "<< newPlayerName << ". Choose the size of the deck: \n";
         usi deckSize = setSizeOfDeck();
         if (deckSize == 52)
