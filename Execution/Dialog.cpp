@@ -133,7 +133,7 @@ void stand(Player &player, Deck &deck)
     Player dealer("Casino Dealer", 50, 50, 0.3);
     std::cout<<"\nThe dealer is now drawing: \n";
     drawCard(dealer, deck);
-    while (dealer.getPoints() <= 17)
+    while (dealer.getPoints() < 17)
     {
         if(!drawCard(dealer,deck))
             {
@@ -146,7 +146,7 @@ void stand(Player &player, Deck &deck)
     if(dealer.getPoints() > player.getPoints())
     {
         player.addGame();
-        std::cout<<"\nPoor you! You Lose!\nYour points were "<< player.getPoints()<< "While the dealer's were " <<dealer.getPoints()<<'\n';
+        std::cout<<"\nPoor you! You Lose!\nYour points were "<< player.getPoints()<< ". While the dealer's were " <<dealer.getPoints()<<'\n';
         updateFile(player);
         return;
     }
@@ -315,11 +315,10 @@ int main()
     char command[50];
     std::cin.getline(command, 50);
 
-    String commandFC(command);
     short int playerIndex = -1;
     for (usi i = 0; i < players.getSize(); i++)
     {
-        if (players[i].getName() == commandFC)
+        if (players[i].getName() == command)
         {
             playerIndex = i;
             break;
@@ -331,21 +330,28 @@ int main()
         String newPlayerName;
         usi newPlayerAge = 0;
         usi spaces = 0;
-        for (size_t i = 0; i < commandFC.getLength(); i++)
+        for (size_t i = 0; command[i] != '\0'; i++)
         {
-            if(commandFC[i] == ' ') spaces++;
+            if(command[i] == ' ') spaces++;
 
-            if(commandFC[i] == ' ' && spaces == 2) 
+            if(command[i] == ' ' && spaces == 2) 
             {
-                newPlayerAge = (commandFC[++i] - '0') * 10;
-                if (commandFC[i] < '0' || commandFC[i]>'9')
+                if (command[i + 1] < '0' || command[i + 1] > '9')
                 {
-                    break;
+                    std::cout<<"No such player. If you want to add player specify his/hers age!\n";
+                    return 1;
                 }
-                newPlayerAge += commandFC[i] - '0';
+                newPlayerAge = (command[++i] - '0') * 10;
+                if (command[i+1] == '\0' || command[i+1] < '0' || command[i+1]>'9')
+                {
+                    std::cout<<"Invalid age! You must be atleast 18!\n";
+                    newPlayerAge /= 10;
+                    return 1;
+                }
+                newPlayerAge += command[i+1] - '0';
                 break;
             }
-            newPlayerName.push_back(commandFC[i]);
+            newPlayerName.push_back(command[i]);
         }
 
         if (newPlayerAge < 18)
