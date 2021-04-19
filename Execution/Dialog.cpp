@@ -161,14 +161,14 @@ void stand(Player &player, Deck &deck)
 
 char makeChoice(Player &player, Deck &deck)
 {
-    std::cout<<"\nHit/Stand/Probability. Tip: You should use just the first letter: H/S/P. \n";
+    std::cout<<"\nHit/Stand/Probability.\n";
     char command2[20];
-    std::cin.ignore();
+    //std::cin.ignore();
     std::cin.getline(command2, 20);
 
     if (command2[0] == '\0') // The cin.ignore() works whenever it wants to
     {
-        std::cout<<"Could you please repeat the command?\n";
+        //std::cout<<"Could you please repeat the command?\n"; // reworked that after the deadline
         std::cin.getline(command2, 20);
     }
 
@@ -195,12 +195,13 @@ usi setSizeOfDeck()
     return sizeOfDeck;
 }
 
-void play(Deck &deck, Player &player)
+void play(Deck &deck, Player &player, bool firstCall)
 {
     char choice;
+    
     do
     {
-        if(!drawCard(player, deck))
+        if((choice == 'H' || firstCall) && !drawCard(player, deck))
             {return;}
         else
             choice = makeChoice(player, deck);
@@ -215,26 +216,8 @@ void play(Deck &deck, Player &player)
     else 
     {
         probabilityCheck(player, deck);
-        do
-        {
-            choice = makeChoice(player, deck);
-            if(choice == 'P')
-            {
-                std::cout<<"Sorry, no more probability checks!\n";
-                choice = makeChoice(player, deck);
-            }
-            if(choice == 'H')
-            {
-                if(!drawCard(player, deck))
-                    return;
-            }
-
-        }while(choice == 'H');
-
-        if(choice == 'S')
-        {
-            stand(player, deck);
-        }
+        play(deck, player, false);
+        return;
     }
 }
 
@@ -366,12 +349,12 @@ int main()
         if (deckSize == 52)
         {
             Deck deck;
-            play(deck, newPlayer);
+            play(deck, newPlayer, true);
         }
         else 
         {
             Deck deck(deckSize);
-            play(deck, newPlayer);
+            play(deck, newPlayer, true);
         }
     }
     else
@@ -381,12 +364,12 @@ int main()
         if (deckSize == 52)
         {
             Deck deck;
-            play(deck, players[playerIndex]);
+            play(deck, players[playerIndex], true);
         }
         else 
         {
             Deck deck(deckSize);
-            play(deck, players[playerIndex]);
+            play(deck, players[playerIndex], true);
         }
     }
 }
