@@ -117,7 +117,6 @@ bool drawCard(Player &player, Deck &deck)
     {
         if(player.getName() == "Casino Dealer")
         {
-            player.addWin();
             std::cout<<"\nCongratulations! \nYou win!\nThe casino dealer drew "<< player.getPoints() << '\n';
             return false;
         }
@@ -138,6 +137,7 @@ void stand(Player &player, Deck &deck)
     {
         if(!drawCard(dealer,deck))
             {
+                player.addWin();
                 updateFile(player);
                 return;
             }
