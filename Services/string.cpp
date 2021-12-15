@@ -6,6 +6,7 @@ void String::copy(const String& other)
 {
     capacity = other.capacity;
     length = other.length;
+    this->destroy();
     data = new char[other.capacity];
 
     for(size_t i = 0; i < length; i++)
@@ -23,6 +24,7 @@ void String::copy(const char* other)
     }
     length = _length;
     capacity = _length + 1;
+    destroy();
     data = new char[capacity];
 
     for(size_t i = 0; i < length; i++)

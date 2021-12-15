@@ -46,6 +46,7 @@ public:
     {
         capacity = others.capacity;
         size = others.size;
+        destroy();
         data = new T[capacity];
 
         for (usi i = 0; i < size; i++)
@@ -130,6 +131,9 @@ public:
 
     void pop_back()
     {
+        //modific
+        delete *data[size-1];
+        //
         size--;
     }
 };
